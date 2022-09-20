@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board game try-2</title>
+    <style>
+        .container{
+            position: relative;
+            border: 2px solid black;
+        }
+        .relative{
+            position: relative;
+        }
+        .absolute{
+            position: absolute;
+        }
+        .block{
+            border: 1px solid yellow;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">  
+
+
+    </div>
+
+    <script>
+        window.onload = function() {
+
+            let worldMapStr =   "W,B,W,B,W,B,W,B\n"+
+                                "B,W,B,W,B,W,B,W\n"+
+                                "W,B,W,B,W,B,W,B\n"+
+                                "B,W,B,W,B,W,B,W\n"+
+                                "W,B,W,B,W,B,W,B\n"+
+                                "B,W,B,W,B,W,B,W\n"+
+                                "W,B,W,B,W,B,W,B\n"+
+                                "B,W,B,W,B,W,B,W";
+                                
+            
+            let constants = {
+                blockHeight: 100,
+                blockWeight:100,
+                containerObj : document.querySelector(".container")
+            };
+
+            const drawArr = mapStr =>{
+                let map = [];
+                let rowArr =  mapStr.split("\n");
+                for(let col of rowArr){
+                    map.push(col.split(","));
+                }
+                console.log(map)
+                return map;
+            }
+            
+        
+            function drawblock(mapArr){
+                let [topOffset,leftOffset] = [0,0];
+                for(let i=0;i<mapArr.length;i++){
+                        let row = mapArr[i];
+                        leftOffset = 0 ;
+                        for(let j=0;j<row.length;j++){
+                            let col = row[j];
+                            let blockObj = document.createElement(("block"));
+                            blockObj.classList.add("block");
+                            blockObj.classList.add("absolute");
+                            blockObj.style.height = constants.blockHeight+"px";
+                            blockObj.style.width = constants.blockWeight+"px";
+                            blockObj.style.top = topOffset+"px";
+                            blockObj.style.left = leftOffset+"px";
+                            if(col == "W"){
+                                blockObj.style.background="white";
+                            }
+                            else{
+                                blockObj.style.background="black";
+                            }
+                            leftOffset += constants.blockWeight;
+                            
+                            constants.containerObj.appendChild(blockObj);
+                        }
+                        topOffset += constants.blockHeight; 
+                }
+            }
+
+            let arrStr=drawArr(worldMapStr);
+            drawblock(arrStr);
+        
+        
+        
+        
+        
+        }
+
+
+
+
+
+    </script>
+    
+</body>
+</html>
