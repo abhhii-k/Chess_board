@@ -8,7 +8,7 @@
     <style>
         .container{
             position: relative;
-            border: 2px solid black;
+            border: 2px solid #eecaca;
         }
         .relative{
             position: relative;
@@ -18,6 +18,11 @@
         }
         .block{
             border: 1px solid yellow;
+        }
+        .coin{
+            /* background-color: peru; */
+            /* border: 1px solid black; */
+            color: white;
         }
 
 
@@ -49,6 +54,25 @@
                 containerObj : document.querySelector(".container")
             };
 
+            let initialMap = new Map;
+            initialMap.set("E11",[0,0]);
+            initialMap.set("E12",[0,7]);
+            initialMap.set("E21",[7,7]);
+            initialMap.set("E22",[7,0]);
+            initialMap.set("H11",[0,1]);
+            initialMap.set("H12",[0,6]);
+            initialMap.set("H21",[7,1]);
+            initialMap.set("H22",[7,6]);
+
+            let assetMap = new Map
+            assetMap.set("E","assets/Elephant.webp");
+            assetMap.set("H","assets/horse.png")
+
+            // const imgElephant = new Image;
+            // imgElephant.src = "assets\Elephant.webp";
+
+
+
             const drawArr = mapStr =>{
                 let map = [];
                 let rowArr =  mapStr.split("\n");
@@ -75,10 +99,10 @@
                             blockObj.style.top = topOffset+"px";
                             blockObj.style.left = leftOffset+"px";
                             if(col == "W"){
-                                blockObj.style.background="white";
+                                blockObj.style.background="#eecaca";
                             }
                             else{
-                                blockObj.style.background="black";
+                                blockObj.style.background="#6d6d6d";
                             }
                             leftOffset += constants.blockWeight;
                             
@@ -90,7 +114,36 @@
 
             let arrStr=drawArr(worldMapStr);
             drawblock(arrStr);
+            intial_adding();
         
+            function addCoins(coinName,coinImg){
+                console.log("add coin function called");
+
+                let pos = initialMap.get(coinName)
+                console.log(pos[0] + pos[1])
+
+                let eImg = new Image(constants.blockWeight,constants.blockHeight);
+                eImg.src = assetMap.get(coinImg);
+                eImg.style.zIndex =100;
+                eImg.classList.add("absolute");
+                eImg.classList.add("coin");
+                eImg.style.top = (pos[0])*constants.blockHeight+"px";
+                eImg.style.left = (pos[1])*constants.blockWeight+"px";
+
+                constants.containerObj.appendChild(eImg);
+
+            }
+
+            function intial_adding(){
+                addCoins("E11","E");
+                addCoins("E12","E");
+                addCoins("E21","E");
+                addCoins("E22","E");
+                addCoins("H11","H");
+                addCoins("H12","H");
+                addCoins("H21","H");
+                addCoins("H22","H");
+            }
         
         
         
